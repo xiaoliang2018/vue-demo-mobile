@@ -1,0 +1,74 @@
+let datas = {
+    // backgroundColor:'#2763ef',
+    title: {
+        text: '€67,619',
+        textStyle: {
+            fontSize: 22,
+            color:"#737373",
+            fontWeight:"500"
+        },
+     
+        left: 'center',
+        top: 'center',
+    },
+    barWidth:15,
+    formatterStr:`<span style="color:"#FFF"">$6688</span>`,
+    isClockwise: true, //true顺时针  false 逆时针
+    backgroundStyle: { //背景颜色
+        color: "#ddd"
+    },
+    itemStyle: { //圈圈的颜色
+        normal: {
+            opacity: 1,
+            color: "#4169e1",
+         
+        }
+    }
+}
+
+option = {
+    backgroundColor: datas.backgroundColor,
+    tooltip: {
+        formatter(params) {
+            return datas.formatterStr;
+        }
+    },
+    title: datas.title,
+    angleAxis: {
+        max: 100,
+        show: false,
+        clockwise: datas.isClockwise, //true顺时针  false 逆时针
+    },
+    radiusAxis: {
+        type: 'category',
+        show: true,
+        axisLabel: {
+            show: false,
+        },
+        axisLine: {
+            show: false,
+
+        },
+        axisTick: {
+            show: false
+        },
+    },
+    polar: {
+        radius: 200,
+        center: ['50%', '50%'],
+    },
+    series: [{
+        type: 'bar',
+        roundCap: true,
+        barWidth: datas.barWidth,
+        showBackground: true,
+        backgroundStyle: datas.backgroundStyle,
+        data: [88],
+        coordinateSystem: 'polar',
+        name: 'A',
+        label: {
+            show: true,
+        },
+        itemStyle: datas.itemStyle,
+    }],
+};

@@ -1,0 +1,80 @@
+let datas = {
+    // backgroundColor:'#2763ef',
+    title: {
+        text: '2020 Ko',
+        textStyle: {
+            fontSize: 22,
+        },
+        itemGap: 8,
+        subtext: '$6688',
+        subtextStyle: {
+            align: 'center',
+            fontSize: 20,
+            fontWeight: 'bold'
+        },
+        left: 'center',
+        top: 'center',
+    },
+    barWidth:20,
+    formatterStr:`<span style="color:"#FFF"">$6688</span>`,
+    isClockwise: false, //true顺时针  false 逆时针
+    backgroundStyle: { //背景颜色
+        opacity: 0,
+        color: "#ddd"
+    },
+    itemStyle: { //圈圈的颜色
+        normal: {
+            opacity: 1,
+            color: "#ff6600",
+            shadowColor: 'rgba(0, 0, 0, 0.3)',
+            shadowBlur: 10
+        }
+    }
+}
+
+option = {
+    backgroundColor: datas.backgroundColor,
+    tooltip: {
+        formatter(params) {
+            return datas.formatterStr;
+        }
+    },
+    title: datas.title,
+    angleAxis: {
+        max: 100,
+        show: false,
+        clockwise: datas.isClockwise, //true顺时针  false 逆时针
+    },
+    radiusAxis: {
+        type: 'category',
+        show: true,
+        axisLabel: {
+            show: false,
+        },
+        axisLine: {
+            show: false,
+
+        },
+        axisTick: {
+            show: false
+        },
+    },
+    polar: {
+        radius: 200,
+        center: ['50%', '50%'],
+    },
+    series: [{
+        type: 'bar',
+        roundCap: true,
+        barWidth: datas.barWidth,
+        showBackground: true,
+        backgroundStyle: datas.backgroundStyle,
+        data: [88],
+        coordinateSystem: 'polar',
+        name: 'A',
+        label: {
+            show: true,
+        },
+        itemStyle: datas.itemStyle,
+    }],
+};

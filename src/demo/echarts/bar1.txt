@@ -1,0 +1,68 @@
+let datas = {
+    colors: ['#1890ff',  '#2fc25b', '#facc14', '#facc14'],
+    Ydata:['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)'],
+    Xdata:[19325, 23438, 31000, 121594, 134141, 681807]
+}
+
+option = {
+    textStyle:{
+      color:"#859da9"  
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    xAxis: {
+        type: 'value',
+        boundaryGap: [0, 0.01],
+        axisLine:{
+            show:false
+        },
+        axisTick:{
+            show:false
+        },
+        splitLine: {
+            lineStyle: {
+                color: '#e2e2e2',
+                // type: 'dashed'
+            }
+        },
+    },
+    yAxis: {
+        type: 'category',
+        data: datas.Ydata ,
+        axisTick:{
+            lineStyle:{
+                color:'#c6c6c6'
+            }
+        },
+        axisLine:{
+            lineStyle:{
+                color:'#c6c6c6'
+            }
+        },
+    //   splitLine:{
+    //       show:true
+    //   }
+    },
+    series: [
+        {
+            name: '2012年',
+            type: 'bar',
+            itemStyle:{
+                normal:{
+                    color:(params) => {
+                        return datas.colors[params.dataIndex]
+                    },
+                    label:{
+                        show:true,
+                        position:'right'
+                    }
+                }
+            },
+            data: datas.Xdata
+        }
+    ]
+};

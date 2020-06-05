@@ -1,0 +1,237 @@
+let parentDataCommmit = {
+        label: {
+            show: true,
+            position: 'inside',
+            formatter: '{b}',
+            offset: [0, 10],
+            // textStyle: {
+            //     color: '#b7b7b7'
+            // }
+        },
+        type: 'bar',
+        itemStyle: {
+            normal: {
+                // color: 'rgba(134,176,237, 0.5)',
+                // borderWidth:1
+             color:new echarts.graphic.LinearGradient(1, 1, 0, 1, [{ 
+                offset: 0,
+                color: '#b7b7b7'
+            },{
+                offset: .005,
+                color: '#fff'
+            }])
+                
+            }
+        },
+        xAxisIndex: 1,
+        yAxisIndex: 1,
+};
+//需要拼接的数据
+let data = {
+    xData: ['书架', '椅子', '桌子', '复印机', '电话', '配件', '纸张', '笔', '美术', '收纳'],
+    yData:[
+        {value:0.1,parentName:'家具'},
+        {value:0.15,parentName:'家具'},
+        {value:0.18,parentName:'家具'},
+        {value:0.25,parentName:'技术'},
+        {value:0.23,parentName:'技术'},
+        {value:0.32,parentName:'技术'},
+        {value:0.33,parentName:'办公用品'},
+        {value:0.36,parentName:'办公用品'},
+        {value:0.57,parentName:'办公用品'},
+        {value:0.72,parentName:'办公用品'},
+        // {value:0.45,parentName:'铜仁市'}
+    ],
+    parentData:[
+    {
+        data: [{
+            name: '家具',
+            value: 1
+        }],
+        barWidth: '30%',
+        ...parentDataCommmit
+    },{
+        data: [{
+            name: '技术',
+            value: 1
+        }],
+        barWidth: '30%',
+        ...parentDataCommmit
+    },{
+        data: [{
+            name: '办公用品',
+            value: 1
+        }],
+        barWidth: '40%',
+        ...parentDataCommmit,
+        barCategoryGap: 0,
+        barGap: 0,
+        itemStyle: {
+            normal: {
+                color: 'rgba(249,207,54, .0)',
+            }
+        }
+    }
+    ],
+    colors:['#1890ff', '#1890ff', '#1890ff', '#2fc25b', '#2fc25b', '#2fc25b', '#facc14', '#facc14', '#facc14', '#facc14']
+}
+/**
+    双X轴标签对应，伪实现思路：
+    底部的标签也是柱状图，对应包含的区域为上方X轴条数占总数的比例，设为宽度即可
+*/
+option = {
+    backgroundColor: '#fff',
+    textStyle:{
+         color:'#b7b7b7'
+    },
+    tooltip: {
+        trigger: 'axis',
+        backgroundColor:"#fff", 
+        borderColor:"#ccc",
+        borderWidth:1,
+        padding:[10,15,10,15],
+        formatter:function(data){
+            // data[0].name
+            //data[0].value
+            //data[0].data.parentName
+            
+            console.log(data,data[0].data.parentName)
+            return `${data[0].data.parentName}
+            <div style='margin-top:3px'>
+                <span style='display: inline-block;background: red;border-radius: 10px;width: 5px;height: 5px;'></span>
+                ${data[0].name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${data[0].value}
+            </div>`
+        },
+        textStyle:{
+            color: '#333', //文字的颜色。
+            fontSize: '12',
+        },
+        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow',        // 默认为直线，可选为：'line' | 'shadow'
+            shadowStyle:{
+                color:"rgb(128, 128, 128,.1)"
+            }
+            
+        }
+    },
+    grid: [
+        {
+            top: 100,
+            bottom: 101
+        },
+        {
+            height: 60,
+            bottom: 40
+        }
+    ],
+    graphic: [
+         {
+            type: 'text',
+            left: '2%',
+            top: 'center',
+            rotation: Math.PI / 2, // 旋转
+            style: {
+                        fill: '#b7b7b7',
+                        text: '占比(%)',
+                        font: '13px Microsoft YaHei'
+                    },
+            // ]
+        }
+    ],
+    xAxis: [{
+        type: 'category',
+        data: data.xData,
+        gridIndex: 0,
+        // axisLabel: {
+        //     color: '#b7b7b7'
+        // },
+        axisLine: {
+            lineStyle: {
+                color: '#efefef'
+            }
+        },
+        // axisTick: {
+        //     length:30,
+        //     // interval:[3,1],
+        //     lineStyle: {
+        //         color: 'red',
+                
+        //     }
+        // },
+        zlevel: 2
+    }, {
+        type: 'category',
+        gridIndex: 1,
+        axisLine: {
+            show: false
+        },
+        zlevel: 1
+    }],
+    yAxis: [{
+        type: 'value',
+        gridIndex: 0,
+        // axisLabel: {
+        //     color: '#b7b7b7'
+        // },
+        splitLine: {
+            lineStyle: {
+                color: '#efefef',
+                type: 'dashed'
+            }
+        },
+        axisLine: {
+            show: false,
+            // lineStyle: {
+            //     color: '#ccc'
+            // }
+        },
+        axisTick: {
+            show: false,
+            // lineStyle: {
+            //     color: '#ccc'
+            // }
+        }
+    },{
+        type: 'value',
+        gridIndex: 1,
+        axisLabel: {
+             show: false
+        },
+        axisLine: {
+            show: false
+        },
+        splitLine: {
+            show: false
+        },
+        axisTick: {
+            show: false
+        }
+    }],
+    series: [{
+        data: data.yData,
+        type: 'bar',
+        // showBackground:true,
+        // backgroundStyle:{
+        //     color:'rgba(180, 180, 180, 0.8)',
+        //     borderColor: '#000',
+        //     borderWidth: 1 ,
+        // },
+        label: {
+            // show: true,
+            // position: 'top',
+            // textStyle: {
+            //     color: '#555'
+            // }
+        },
+        itemStyle: {
+            normal: {
+                color: (params) => {
+                    let colors = data.colors
+                    return colors[params.dataIndex]
+                }
+            }
+        },
+        xAxisIndex: 0,
+        yAxisIndex: 0
+    },...data.parentData]
+};
